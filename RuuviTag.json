@@ -1,0 +1,507 @@
+[
+    {
+        "id": "c63bddecbef011e6",
+        "type": "tab",
+        "label": "Scan for Ruuvi Tag",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "575f29f9d78746f9",
+        "type": "debug",
+        "z": "c63bddecbef011e6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 350,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "f92ce972e58b1175",
+        "type": "function",
+        "z": "c63bddecbef011e6",
+        "name": "Pick data",
+        "func": "let measure = JSON.parse(msg.payload);\n\nlet msg0 = {};\nmsg0.payload = (measure.temperature).toFixed(2)\nmsg0.topic = \"Temperature\";\n\nlet msg1 = {};\nmsg1.payload = measure.humidity;\nmsg1.topic = \"Humidity\";\n\nlet msg2 = {};\nmsg2.payload = (measure.pressure/100).toFixed(2);\n// node.warn(msg2.payload)\nmsg2.topic = \"Pressure\";\n\nlet msg3 = {};\nmsg3.payload = measure.battery/1000\nmsg3.topic = \"Battery\";\n\nlet msg4 = {};\nmsg4.payload = measure.txPower\nmsg4.topic = \"TxPower\";\n\nlet msg5 = {};\nmsg5.payload = measure.movementCounter\nmsg5.topic = \"Movement Counter\";\n\nreturn [msg0, msg1, msg2, msg3, msg4, msg5];",
+        "outputs": 6,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 300,
+        "wires": [
+            [
+                "0626c0ae4b92b754",
+                "a54daab9c623cd17"
+            ],
+            [
+                "57a717b92f7d6d4f",
+                "adfddf8938ac4c45"
+            ],
+            [
+                "5f3f0d9a7aa746ee",
+                "a26f3bde9a58c8d7"
+            ],
+            [
+                "ba253c3463d2958d"
+            ],
+            [
+                "d3511a1fbeb1866b"
+            ],
+            [
+                "4a7e3640e74f2986"
+            ]
+        ]
+    },
+    {
+        "id": "0626c0ae4b92b754",
+        "type": "ui_gauge",
+        "z": "c63bddecbef011e6",
+        "name": "",
+        "group": "e51a7cef.4b381",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "°C ",
+        "format": "{{value | number:1}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 750,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "a54daab9c623cd17",
+        "type": "ui_chart",
+        "z": "c63bddecbef011e6",
+        "name": "",
+        "group": "e51a7cef.4b381",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Temperature",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "24",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "x": 750,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "57a717b92f7d6d4f",
+        "type": "ui_gauge",
+        "z": "c63bddecbef011e6",
+        "name": "",
+        "group": "c5cfacb4.12e2c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value | number:1}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 900,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "5f3f0d9a7aa746ee",
+        "type": "ui_gauge",
+        "z": "c63bddecbef011e6",
+        "name": "",
+        "group": "34c66657.b93e9a",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Pressure",
+        "label": "hPa",
+        "format": "{{value | number:0}}",
+        "min": "950",
+        "max": "1050",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1040,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "a26f3bde9a58c8d7",
+        "type": "ui_chart",
+        "z": "c63bddecbef011e6",
+        "name": "",
+        "group": "34c66657.b93e9a",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Pressure",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "24",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "x": 1040,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "adfddf8938ac4c45",
+        "type": "ui_chart",
+        "z": "c63bddecbef011e6",
+        "name": "",
+        "group": "c5cfacb4.12e2c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Humidity",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "24",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "x": 900,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ba253c3463d2958d",
+        "type": "ui_text",
+        "z": "c63bddecbef011e6",
+        "group": "e51a7cef.4b381",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "Battery",
+        "label": "",
+        "format": "Battery {{msg.payload}} V",
+        "layout": "row-center",
+        "x": 740,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "d3511a1fbeb1866b",
+        "type": "ui_text",
+        "z": "c63bddecbef011e6",
+        "group": "c5cfacb4.12e2c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "TxPower",
+        "label": "",
+        "format": "TxPower {{msg.payload}} dB",
+        "layout": "row-center",
+        "x": 900,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "4a7e3640e74f2986",
+        "type": "ui_text",
+        "z": "c63bddecbef011e6",
+        "group": "34c66657.b93e9a",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "Move counter",
+        "label": "",
+        "format": "Move counter {{msg.payload}}",
+        "layout": "row-center",
+        "x": 1060,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "bd4a32665607db1d",
+        "type": "comment",
+        "z": "c63bddecbef011e6",
+        "name": "Column 1",
+        "info": "",
+        "x": 740,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "d822823b3887ed68",
+        "type": "comment",
+        "z": "c63bddecbef011e6",
+        "name": "Column 2",
+        "info": "",
+        "x": 900,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7c21e310775e06e6",
+        "type": "comment",
+        "z": "c63bddecbef011e6",
+        "name": "Column 3",
+        "info": "",
+        "x": 1040,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7f7098f01eaebf75",
+        "type": "BLE Scanner",
+        "z": "c63bddecbef011e6",
+        "name": "BLE Scanner",
+        "searchFor": "",
+        "searchForType": "All",
+        "output": "Peripheral",
+        "outputType": "Output",
+        "x": 510,
+        "y": 180,
+        "wires": [
+            [
+                "37f29a928be7c613"
+            ]
+        ]
+    },
+    {
+        "id": "e109c5901380b6d8",
+        "type": "inject",
+        "z": "c63bddecbef011e6",
+        "name": "Scan once a minute",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "start",
+        "x": 200,
+        "y": 120,
+        "wires": [
+            [
+                "c468770e7dd865dc",
+                "7f7098f01eaebf75"
+            ]
+        ]
+    },
+    {
+        "id": "c468770e7dd865dc",
+        "type": "change",
+        "z": "c63bddecbef011e6",
+        "name": "Stop scan",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "stop",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 170,
+        "y": 180,
+        "wires": [
+            [
+                "4759f6618e815641"
+            ]
+        ]
+    },
+    {
+        "id": "4759f6618e815641",
+        "type": "delay",
+        "z": "c63bddecbef011e6",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 320,
+        "y": 180,
+        "wires": [
+            [
+                "7f7098f01eaebf75"
+            ]
+        ]
+    },
+    {
+        "id": "37f29a928be7c613",
+        "type": "function",
+        "z": "c63bddecbef011e6",
+        "name": "Unpack Ruuvi data",
+        "func": "// Reused code from https://github.com/ojousima/node-red/blob/master/ruuvi-node/ruuvitag.js\n\nlet manufacturerDataString = \"\"\nlet isMqtt = false;\nlet mqttPayload = {};\n\n// Check if message input is from noble.\nif (!msg.payload.advertisement || !msg.payload.advertisement.manufacturerData) {\n    // Message is not from noble, see if it's from the Ruuvi Gateway via MQTT.\n    if (!msg.topic || !msg.payload) {\n        return null;\n    } else {\n        isMqtt = true;\n        let mqttManufacturerStringStart = 10;\n        mqttPayload = JSON.parse(msg.payload);\n        manufacturerDataString = mqttPayload.data.substring(mqttManufacturerStringStart);\n    }\n} else {\n    manufacturerDataString = Buffer.from(msg.payload.advertisement.manufacturerData).toString(\"hex\");\n}\n\n// Ignore any non-Ruuvi tags\nif (manufacturerDataString.substring(0, 4) != \"9904\") {\n        return null;\n}\n\n// node.warn(manufacturerDataString);\n\nlet ruuviData = parseRuuviData(manufacturerDataString);\n\nif (!ruuviData) {\n    return null;\n}\n\nif (isMqtt) {\n    ruuviData.mac = parseMacFromMqttTopic(msg.topic);\n} else {\n    ruuviData.mac = msg.payload.address;\n}\n\nmsg.payload = JSON.stringify(ruuviData);\n\nreturn msg;\n\n// ********* Functions ********** //\n\nfunction parseMacFromMqttTopic(topic) {\n    let macFound = topic.match(/(?:[0-9a-fA-F]:?){12}/g);\n    if (!macFound) {\n        return \"\";\n    } else {\n        return macFound[0];\n    }\n}\n\nfunction parseRuuviData(manufacturerDataString) {\n\n    let formatStart = 4;\n    let formatEnd = 6;\n    let formatRawV1 = \"03\";\n    let formatRawV2 = \"05\";\n    let dataFormat = manufacturerDataString.substring(formatStart, formatEnd);\n    let dataObject = {};\n    switch (dataFormat) {\n        case formatRawV1:\n            dataObject = parseRawV1Ruuvi(manufacturerDataString)\n            break;\n        case formatRawV2:\n            dataObject = parseRawV2Ruuvi(manufacturerDataString)\n            break;\n\n        default:\n            //console.log(\"Unknown dataformat: \" + dataFormat);\n            dataObject = null;\n    }\n\n    return dataObject;\n}\n\n//https://github.com/ruuvi/ruuvi-sensor-protocols\nfunction parseRawV1Ruuvi(manufacturerDataString) {\n    let humidityStart = 6;\n    let humidityEnd = 8;\n    let temperatureStart = 8;\n    let temperatureEnd = 12;\n    let pressureStart = 12;\n    let pressureEnd = 16;\n    let accelerationXStart = 16;\n    let accelerationXEnd = 20;\n    let accelerationYStart = 20;\n    let accelerationYEnd = 24;\n    let accelerationZStart = 24;\n    let accelerationZEnd = 28;\n    let batteryStart = 28;\n    let batteryEnd = 32;\n\n    let robject = {};\n\n    let humidity = manufacturerDataString.substring(humidityStart, humidityEnd);\n    //console.log(humidity);\n    humidity = parseInt(humidity, 16);\n    humidity /= 2; //scale\n    robject.humidity = humidity;\n\n    let temperatureString = manufacturerDataString.substring(temperatureStart, temperatureEnd);\n    let temperature = parseInt(temperatureString.substring(0, 2), 16); //Full degrees\n    temperature += parseInt(temperatureString.substring(2, 4), 16) / 100; //Decimals\n    if (temperature > 128) { // Ruuvi format, sign bit + value\n        temperature = temperature - 128;\n        temperature = 0 - temperature;\n    }\n    robject.temperature = +temperature.toFixed(2); // Round to 2 decimals, format as a number\n\n    let pressure = parseInt(manufacturerDataString.substring(pressureStart, pressureEnd), 16); // uint16_t pascals\n    pressure += 50000; //Ruuvi format\n    robject.pressure = pressure;\n\n    let accelerationX = parseInt(manufacturerDataString.substring(accelerationXStart, accelerationXEnd), 16); // milli-g\n    if (accelerationX > 32767) { accelerationX -= 65536; } //two's complement\n\n    let accelerationY = parseInt(manufacturerDataString.substring(accelerationYStart, accelerationYEnd), 16); // milli-g\n    if (accelerationY > 32767) { accelerationY -= 65536; } //two's complement\n\n    let accelerationZ = parseInt(manufacturerDataString.substring(accelerationZStart, accelerationZEnd), 16); // milli-g\n    if (accelerationZ > 32767) { accelerationZ -= 65536; } //two's complement\n\n    robject.accelerationX = accelerationX;\n    robject.accelerationY = accelerationY;\n    robject.accelerationZ = accelerationZ;\n\n    let battery = parseInt(manufacturerDataString.substring(batteryStart, batteryEnd), 16); // milli-g\n    robject.battery = battery;\n\n    return robject;\n}\n\nfunction parseRawV2Ruuvi(manufacturerDataString) {\n    let temperatureStart = 6;\n    let temperatureEnd = 10;\n    let humidityStart = 10;\n    let humidityEnd = 14;\n    let pressureStart = 14;\n    let pressureEnd = 18;\n    let accelerationXStart = 18;\n    let accelerationXEnd = 22;\n    let accelerationYStart = 22;\n    let accelerationYEnd = 26;\n    let accelerationZStart = 26;\n    let accelerationZEnd = 30;\n    let powerInfoStart = 30;\n    let powerInfoEnd = 34;\n    let movementCounterStart = 34;\n    let movementCounterEnd = 36;\n    let sequenceCounterStart = 36;\n    let sequenceCounterEnd = 40;\n\n    let robject = {};\n\n    let temperatureString = manufacturerDataString.substring(temperatureStart, temperatureEnd);\n    let temperature = parseInt(temperatureString, 16);\n\n    if ((temperature & 0x8000) > 0) { temperature = temperature - 0x10000; } // two's complement\n\n    robject.temperature = +(temperature / 200).toFixed(2); // 0.005 degrees\n\n    let humidityString = manufacturerDataString.substring(humidityStart, humidityEnd);\n    let humidity = parseInt(humidityString, 16); // 0.0025%\n    robject.humidity = +(humidity / 400).toFixed(2);\n\n    let pressure = parseInt(manufacturerDataString.substring(pressureStart, pressureEnd), 16); // uint16_t pascals\n    pressure += 50000; //Ruuvi format\n    robject.pressure = pressure;\n\n    // acceleration values in milli-Gs\n    let accelerationX = parseInt(manufacturerDataString.substring(accelerationXStart, accelerationXEnd), 16); // milli-g\n    if ((accelerationX & 0x8000) > 0) { accelerationX -= 0x10000; } // two's complement\n\n    let accelerationY = parseInt(manufacturerDataString.substring(accelerationYStart, accelerationYEnd), 16); // milli-g\n    if ((accelerationY & 0x8000) > 0) { accelerationY -= 0x10000; } // two's complement\n\n    let accelerationZ = parseInt(manufacturerDataString.substring(accelerationZStart, accelerationZEnd), 16); // milli-g\n    if ((accelerationZ & 0x8000) > 0) { accelerationZ -= 0x10000; } // two's complement\n\n    robject.accelerationX = accelerationX;\n    robject.accelerationY = accelerationY;\n    robject.accelerationZ = accelerationZ;\n\n    let powerInfoString = manufacturerDataString.substring(powerInfoStart, powerInfoEnd);\n    let battery = (parseInt(powerInfoString, 16) >> 5) + 1600; // millivolts > 1600\n    let txpower = (parseInt(powerInfoString, 16) & 0x001F) - 40; // dB > -40\n    robject.battery = battery;\n    robject.txPower = txpower;\n\n    let movementCounterString = manufacturerDataString.substring(movementCounterStart, movementCounterEnd);\n    let movementCounter = parseInt(movementCounterString, 16);\n    robject.movementCounter = movementCounter;\n\n    let sequenceCounterString = manufacturerDataString.substring(sequenceCounterStart, sequenceCounterEnd);\n    let sequenceCounter = parseInt(sequenceCounterString, 16);\n    robject.sequenceCounter = sequenceCounter;\n\n    return robject;\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 280,
+        "wires": [
+            [
+                "f92ce972e58b1175",
+                "575f29f9d78746f9"
+            ]
+        ]
+    },
+    {
+        "id": "0fc5e413efbc1251",
+        "type": "comment",
+        "z": "c63bddecbef011e6",
+        "name": "Scan, in 5 seconds, for a Ruuvi tag once every minute",
+        "info": "",
+        "x": 280,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e51a7cef.4b381",
+        "type": "ui_group",
+        "name": "Column 1",
+        "tab": "d3f55b93.e53b28",
+        "order": 1,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "c5cfacb4.12e2c",
+        "type": "ui_group",
+        "name": "Column 2",
+        "tab": "d3f55b93.e53b28",
+        "order": 2,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "34c66657.b93e9a",
+        "type": "ui_group",
+        "name": "Column 3",
+        "tab": "d3f55b93.e53b28",
+        "order": 3,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "d3f55b93.e53b28",
+        "type": "ui_tab",
+        "name": "Ruuvi measurement",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
